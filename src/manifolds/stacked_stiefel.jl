@@ -108,22 +108,6 @@ to2D(M::StackedStiefel, A::Array) = reshape(permutedims(A, (1, 3, 2)), M.m * M.d
 
 to3D(M::StackedStiefel, A::Matrix) = permutedims(reshape(A, M.d, M.m, M.k), (1, 3, 2))
 
-multitransp(A) = permutedims(A, (2, 1, 3))
-
-function multiprod(A, B)
-    C = similar(A, size(A, 1), size(B, 2), size(B, 3))
-    
-    for i in 1:size(A, 3)
-        C[:, :, i] = A[:, :, i] * B[:, :, i]
-    end
-
-    return C
-end
-
-multisym(A) = 0.5 * (A + multitransp(A))
-
-symbdiag(A, B) = multisym(multiprod(A, multitransp(B)))
-
 function project_to_stiefel{T}(M::StackedStiefel, Y::Matrix{T}, k::Int)
     M_proj = StackedStiefel(M.m, M.d, k)
     

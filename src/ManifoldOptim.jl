@@ -27,19 +27,25 @@ export
     transp,
     pairmean,
 
-    # Helper methods
+    # Stacked Stiefel helper methods
     project_to_stiefel,
 
     # Manifolds
+    Orthogonal,
     Sphere,
-    StackedStiefel
+    StackedStiefel,
+    Stiefel
+
 
 include("types.jl")
+
+include("helpers.jl")
 
 include("solvers/trust_regions/truncated_conjugate_gradient.jl")
 include("solvers/trust_regions/trust_regions.jl")
 
 include("manifolds/sphere.jl")
 include("manifolds/stacked_stiefel.jl")
+include("manifolds/stiefel.jl")
 
 end

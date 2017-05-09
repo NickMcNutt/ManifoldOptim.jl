@@ -23,9 +23,11 @@ function trust_regions(M::Manifold, F::ManifoldFunction, x₀ = rand(M);
     if verbosity == 1
         @printf("  Step    Accept?  TR change     f(x)         |∇fₓ|\n")
         @printf("-----------------------------------------------------\n")
+        flush(STDOUT)
     elseif verbosity == 2
         @printf("  Step    Accept?  TR change     f(x)         |∇fₓ|       ⟨r, r⟩ₓ      ⟨δ, Hδ⟩ₓ         α            τ\n")
         @printf("-------------------------------------------------------------------------------------------------------------\n")
+        flush(STDOUT)
     end
     
     for k in 1:max_iters
@@ -67,6 +69,7 @@ function trust_regions(M::Manifold, F::ManifoldFunction, x₀ = rand(M);
         
         if verbosity > 0
             @printf("  RTR       %s        (%s)     %10.2e   %10.2e\n", ifelse(accept_step, '✓', ' '), Δ_change, f, norm_∇f)
+            flush(STDOUT)
         end
         
         Δ = Δ₊

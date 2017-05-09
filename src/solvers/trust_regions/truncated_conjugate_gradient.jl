@@ -1,4 +1,4 @@
-function truncated_conjugate_gradient(M::Manifold, F::ManifoldFunction, x::Matrix{Float64}, ∇f::Matrix{Float64}, Δ::Float64;
+function truncated_conjugate_gradient{N}(M::Manifold, F::ManifoldFunction, x::Array{Float64, N}, ∇f::Array{Float64, N}, Δ::Float64;
     θ = 1.0,
     κ = 0.1,
     min_iters = 1,
@@ -30,6 +30,7 @@ function truncated_conjugate_gradient(M::Manifold, F::ManifoldFunction, x::Matri
         
         if verbosity > 1
             @printf("  tCG                                                  %10.2e   %10.2e   %10.2e\n", r_r, δ_Hδ, α)
+            flush(STDOUT)
         end
         
         if δ_Hδ <= 0 || η₊_η₊ >= Δ^2
@@ -39,6 +40,7 @@ function truncated_conjugate_gradient(M::Manifold, F::ManifoldFunction, x::Matri
             
             if verbosity > 1
                 @printf("  tCG                                                                                         %10.2e\n", τ)
+                flush(STDOUT)
             end
             
             stop_flag = δ_Hδ <= 0 ? :negative_curvature : :trust_region_exceeded
